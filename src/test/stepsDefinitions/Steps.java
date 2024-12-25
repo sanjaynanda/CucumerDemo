@@ -17,11 +17,11 @@ public class Steps {
 	public void navigateToLoginPage() {
 	  
 	driver=new ChromeDriver();
-	driver.get("https://tutorialsninja.com/demo/index.php?route=account/login");
+	driver.get("https://demo.nopcommerce.com/login?returnUrl=%2F");
 	
 	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 	driver.manage().window().maximize();
-	//driver.findElement(By.xpath("//a[normalize-space()='Log in']"));
+	driver.findElement(By.xpath("//a[normalize-space()='Log in']"));
 		
 	}
 
@@ -29,28 +29,29 @@ public class Steps {
 	@When("the user enters valid credentials \\(username: {string}, password: {string})")
 	public void the_user_enters_valid_credentials_username_password(String user, String pwd) {
 	  
-		driver.findElement(By.xpath("//input[@id='input-email']")).sendKeys(user);
-		driver.findElement(By.xpath("//input[@id='input-password']")).sendKeys(pwd);
+		driver.findElement(By.xpath("//input[@id='Email']")).sendKeys(user);
+		driver.findElement(By.xpath("//input[@id='Password']")).sendKeys(pwd);
 	}
 
 	@When("the user clicks on the Login button")
 	public void the_user_clicks_on_the_login_button() {
 	    
-		driver.findElement(By.xpath("//input[@value='Login']")).click();
+		driver.findElement(By.xpath("//button[normalize-space()='Log in']")).click();
+		driver.findElement(By.xpath("//*[@id=\"HJup0\"]/div/label/input")).click();
 		
 	}
 
 	@Then("the user should be redirected to the My Account Page")
 	public void the_user_should_be_redirected_to_the_my_account_page() {
 	    
-		boolean status=driver.findElement(By.xpath("//h2[normalize-space()='My Account']")).isDisplayed();
+		boolean status=driver.findElement(By.xpath("//a[@class='ico-account']")).isDisplayed();
 		Assert.assertEquals(status,true);
 	}
 
 	@Then("the user should see a welcome message")
 	public void the_user_should_see_a_welcome_message() {
 	  
-		boolean welcometxt=driver.findElement(By.xpath("//h2[normalize-space()='My Orders']")).isDisplayed();
+		boolean welcometxt=driver.findElement(By.xpath("//h2[normalize-space()='Welcome to our store']")).isDisplayed();
 		Assert.assertEquals(welcometxt,true);
 		driver.quit();
 	}
